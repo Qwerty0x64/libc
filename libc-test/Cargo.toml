@@ -1,6 +1,6 @@
 [package]
 name = "libc-test"
-version = "0.2.93"
+version = "0.2.98"
 authors = ["The Rust Project Developers"]
 license = "MIT OR Apache-2.0"
 build = "build.rs"
@@ -12,7 +12,7 @@ A test crate for the libc crate.
 
 [dependencies.libc]
 path = ".."
-version = "0.2.93"
+version = "0.2.98"
 default-features = false
 
 [build-dependencies]
@@ -34,6 +34,11 @@ harness = false
 [[test]]
 name = "linux-fcntl"
 path = "test/linux_fcntl.rs"
+harness = false
+
+[[test]]
+name = "linux-if-arp"
+path = "test/linux_if_arp.rs"
 harness = false
 
 [[test]]

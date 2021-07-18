@@ -72,6 +72,9 @@ jobs:
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
+      - name: Self-update rustup
+        run: rustup self update
+        shell: bash
       - name: Setup Rust toolchain
         run: TARGET=${{ matrix.target }} sh ./ci/install-rust.sh
         shell: bash
@@ -82,8 +85,6 @@ jobs:
   style_check:
     name: Style check
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: true
     steps:
       - uses: rust-lang/simpleinfra/github-actions/cancel-outdated-builds@master
         with:
@@ -126,7 +127,10 @@ jobs:
           powerpc64le-unknown-linux-gnu,
           s390x-unknown-linux-gnu,
           riscv64gc-unknown-linux-gnu,
-          # FIXME: Figure out why this is disabled.
+          # FIXME: A recent nightly causes a linker failure:
+          # https://github.com/rust-lang/rust/issues/76679
+          # See this comment for more details:
+          # https://github.com/rust-lang/libc/pull/2225#issuecomment-880696737
           #wasm32-wasi,
           sparc64-unknown-linux-gnu,
           wasm32-unknown-emscripten,
@@ -152,8 +156,6 @@ jobs:
     name: Docker Switch
     needs: [docker_linux_tier1, style_check]
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: true
     steps:
       - uses: rust-lang/simpleinfra/github-actions/cancel-outdated-builds@master
         with:
@@ -229,13 +231,11 @@ jobs:
     needs: build_channels_linux
     runs-on: ubuntu-20.04
     continue-on-error: true
-    strategy:
-      fail-fast: true
     steps:
       - uses: actions/checkout@v2
       - name: Setup Rust toolchain
         # Should update the semverver revision in semver.sh if we touch nightly ver.
-        run: TOOLCHAIN=nightly-2020-11-19 sh ./ci/install-rust.sh
+        run: TOOLCHAIN=nightly-2021-05-21 sh ./ci/install-rust.sh
       - name: Check breaking changes
         run: sh ci/semver.sh linux
 
@@ -244,13 +244,11 @@ jobs:
     needs: build_channels_macos
     runs-on: macos-10.15
     continue-on-error: true
-    strategy:
-      fail-fast: true
     steps:
       - uses: actions/checkout@v2
       - name: Setup Rust toolchain
         # FIXME: Pin nightly version to make semverver compilable.
-        run: TOOLCHAIN=nightly-2020-11-19 sh ./ci/install-rust.sh
+        run: TOOLCHAIN=nightly-2021-05-21 sh ./ci/install-rust.sh
       - name: Check breaking changes
         run: sh ci/semver.sh macos
 
@@ -258,8 +256,6 @@ jobs:
     name: Generate documentation
     runs-on: ubuntu-20.04
     needs: docker_linux_tier2
-    strategy:
-      fail-fast: true
     steps:
       - uses: rust-lang/simpleinfra/github-actions/cancel-outdated-builds@master
         with:

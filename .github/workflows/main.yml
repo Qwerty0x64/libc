@@ -64,6 +64,9 @@ jobs:
           - target: i686-pc-windows-msvc
     steps:
       - uses: actions/checkout@v2
+      - name: Self-update rustup
+        run: rustup self update
+        shell: bash
       - name: Setup Rust toolchain
         run: TARGET=${{ matrix.target }} sh ./ci/install-rust.sh
         shell: bash
@@ -74,8 +77,6 @@ jobs:
   style_check:
     name: Style check
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: true
     steps:
       - uses: actions/checkout@v2
       - name: Setup Rust toolchain

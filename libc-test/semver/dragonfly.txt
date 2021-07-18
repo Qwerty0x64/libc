@@ -137,6 +137,10 @@ CMSG_LEN
 CMSG_NXTHDR
 CMSG_SPACE
 CODESET
+CPU_CLR
+CPU_ISSET
+CPU_SET
+CPU_ZERO
 CRNCYSTR
 CRTSCTS
 CRTS_IFLOW
@@ -1145,8 +1149,14 @@ aio_suspend
 aio_waitcomplete
 aio_write
 aiocb
+arc4random
+arc4random_buf
+arc4random_uniform
 arphdr
 atof
+backtrace
+backtrace_symbols
+backtrace_symbols_fd
 bpf_dltlist
 bpf_hdr
 bpf_insn
@@ -1174,6 +1184,7 @@ endpwent
 endservent
 endutxent
 exit_status
+explicit_bzero
 faccessat
 fchdir
 fchflags
@@ -1241,8 +1252,10 @@ lutimes
 lwp_rtprio
 lwpid_t
 madvise
+mcontext_t
 memmem
 memrchr
+memset_s
 mincore
 mkdirat
 mkfifoat
@@ -1287,6 +1300,13 @@ pseudo_AF_XTP
 pthread_attr_get_np
 pthread_attr_getguardsize
 pthread_attr_getstack
+pthread_barrierattr_destroy
+pthread_barrierattr_getpshared
+pthread_barrierattr_init
+pthread_barrierattr_setpshared
+pthread_barrierattr_t
+pthread_barrier_destroy
+pthread_barrier_init
 pthread_cancel
 pthread_condattr_getclock
 pthread_condattr_getpshared
@@ -1300,6 +1320,12 @@ pthread_mutexattr_setpshared
 pthread_rwlockattr_getpshared
 pthread_rwlockattr_setpshared
 pthread_set_name_np
+pthread_spin_destroy
+pthread_spin_init
+pthread_spin_lock
+pthread_spin_trylock
+pthread_spin_unlock
+pthread_spinlock_t
 ptrace
 ptrace_io_desc
 pututxline
@@ -1338,6 +1364,7 @@ setgroups
 sethostname
 setitimer
 setpriority
+setproctitle
 setprogname
 setpwent
 setresgid
@@ -1372,6 +1399,7 @@ telldir
 timex
 truncate
 ttyname_r
+ucontext_t
 unmount
 useconds_t
 uselocale

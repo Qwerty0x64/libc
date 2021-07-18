@@ -1768,8 +1768,10 @@ pub const SCM_TIMESTAMP: ::c_int = SO_TIMESTAMP;
 pub const SOCK_RAW: ::c_int = 3;
 pub const SOCK_RDM: ::c_int = 4;
 
+pub const IP_TOS: ::c_int = 1;
 pub const IP_TTL: ::c_int = 2;
 pub const IP_HDRINCL: ::c_int = 3;
+pub const IP_RECVTOS: ::c_int = 13;
 pub const IP_FREEBIND: ::c_int = 15;
 pub const IP_TRANSPARENT: ::c_int = 19;
 pub const IP_MULTICAST_IF: ::c_int = 32;
@@ -3156,7 +3158,7 @@ f! {
         return
     }
 
-    pub fn FD_ISSET(fd: ::c_int, set: *mut fd_set) -> bool {
+    pub fn FD_ISSET(fd: ::c_int, set: *const fd_set) -> bool {
         let fd = fd as usize;
         let size = ::mem::size_of_val(&(*set).fds_bits[0]) * 8;
         return ((*set).fds_bits[fd / size] & (1 << (fd % size))) != 0
